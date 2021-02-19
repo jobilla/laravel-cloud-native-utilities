@@ -2,7 +2,12 @@
 
 namespace Jobilla\CloudNative\Laravel;
 
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Jobilla\CloudNative\Laravel\Http\Controllers\ServeMetrics;
+use Jobilla\CloudNative\Laravel\Http\Middleware\RecordPrometheusMetrics;
 use Prometheus\CollectorRegistry;
 use Prometheus\Storage\APC;
 
@@ -17,16 +22,18 @@ class CloudNativeServiceProvider extends ServiceProvider
         });
     }
 
-    public function boot()
+    public function boot(Repository $config, Kernel $kernel)
     {
         $this->publishes([
             __DIR__.'/../config/logging.php' => config_path('logging.php'),
             __DIR__.'/../config/metrics.php' => config_path('metrics.php'),
         ]);
 
-        if ($this->app['config']->get('metrics.route.enabled')) {
-
+        if ($config->get('metrics.route.enabled')) {
+            /** @var Router $router */
             $router = $this->app['router'];
+            $router->get($config->get('metrics.route.path'), ServeMetrics::class);
+            $kernel->prependMiddleware(RecordPrometheusMetrics::class);
         }
     }
 }

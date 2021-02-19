@@ -8,3 +8,9 @@ by providing sensible defaults from the get-go.
 
 - standardised metrics output in Prometheus format on `/metrics`
 - JSON-formatted logs with minimal setup
+
+## Installation
+
+1. `composer require jobilla/cloud-native-laravel`
+1. `php artisan vendor:publish --provider=Jobilla\\CloudNative\\Laravel\\CloudNativeServiceProvider` (note
+   that this will also publish a `logging.php` that overwrites the default Laravel logging config)

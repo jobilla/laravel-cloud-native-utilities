@@ -2,6 +2,7 @@
 
 namespace Jobilla\CloudNative\Laravel\Http\Middleware;
 
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Http\Request;
 use Prometheus\CollectorRegistry;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,10 +13,15 @@ class RecordPrometheusMetrics
      * @var CollectorRegistry
      */
     protected CollectorRegistry $registry;
+    /**
+     * @var Repository
+     */
+    private Repository $config;
 
-    public function __construct(CollectorRegistry $registry)
+    public function __construct(CollectorRegistry $registry, Repository $config)
     {
         $this->registry = $registry;
+        $this->config = $config;
     }
 
     public function handle(Request $request, $next)
@@ -29,7 +35,7 @@ class RecordPrometheusMetrics
             return;
         }
         $route = $request->route()->uri();
-        if ($route === 'metrics') {
+        if ($route === trim($this->config->get('metrics.route.path'), '/')) {
             return;
         }
 
