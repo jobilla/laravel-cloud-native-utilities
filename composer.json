@@ -1,5 +1,5 @@
 {
-    "name": "jobilla/laravel-prometheus-collectors",
+    "name": "jobilla/cloud-native-laravel",
     "description": "Prometheus collectors for Laravel",
     "type": "library",
     "require": {
