@@ -23,7 +23,7 @@
             "Jobilla\\CloudNative\\Laravel\\": "src/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "extra": {
         "laravel": {
             "providers": [
