@@ -27,7 +27,11 @@ class CloudNativeServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/logging.php' => config_path('logging.php'),
             __DIR__.'/../config/metrics.php' => config_path('metrics.php'),
-        ]);
+        ], 'cloud-native-config');
+
+        $this->publishes([
+            __DIR__.'/../assets/Dockerfile' => base_path('Dockerfile'),
+        ], 'dockerfile');
 
         if ($config->get('metrics.route.enabled')) {
             /** @var Router $router */

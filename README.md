@@ -12,5 +12,7 @@ by providing sensible defaults from the get-go.
 ## Installation
 
 1. `composer require jobilla/cloud-native-laravel`
-1. `php artisan vendor:publish --provider=Jobilla\\CloudNative\\Laravel\\CloudNativeServiceProvider` (note
-   that this will also publish a `logging.php` that overwrites the default Laravel logging config)
+1. `php artisan vendor:publish --tag=cloud-native-config` (note that this will also publish
+   a `logging.php` that overwrites the default Laravel logging config)
+1. Optionally, run `php artisan vendor:publish --tag=dockerfile` to publish a `Dockerfile`
+   to your project root
