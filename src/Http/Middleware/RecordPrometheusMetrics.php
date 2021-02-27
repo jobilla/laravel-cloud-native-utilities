@@ -55,7 +55,7 @@ class RecordPrometheusMetrics
             'request_duration_seconds',
             'Duration of HTTP requests in seconds',
             $labelNames,
-            [0.1, 0.2, 0.3, 0.4, 0.5, 0.75, 1.0, 2.5, 5.0]
+            $this->config->get('metrics.buckets'),
         );
 
         $labels = [$route, $request->method(), $response->getStatusCode()];
