@@ -3,7 +3,7 @@
 return [
     // The route configuration controls which path the metrics data is served on
     'route' => [
-        'enabled' => true,
+        'enabled' => env('ENABLE_METRICS', true),
         'path' => '/metrics',
     ],
 
