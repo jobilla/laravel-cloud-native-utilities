@@ -14,7 +14,9 @@ return [
     | one of the channels defined in the "channels" configuration array.
     |
     */
-    'default'  => env('LOG_CHANNEL', 'stdout'),
+
+    'default'  => env('LOG_CHANNEL', 'stack'),
+
     /*
     |--------------------------------------------------------------------------
     | Log Channels
@@ -28,8 +30,34 @@ return [
     |                    "errorlog", "custom", "stack"
     |
     */
+
     'channels' => [
-        'stdout'    => [
+        'stack' => [
+            'driver'            => 'stack',
+            'channels'          => ['stderr', 'bugsnag'],
+            'ignore_exceptions' => false,
+        ],
+
+        'bugsnag' => [
+            'driver' => 'bugsnag',
+        ],
+
+        'single' => [
+            'driver' => 'single',
+            'path'   => storage_path('logs/laravel.log'),
+            'level'  => 'debug',
+        ],
+
+        'stderr' => [
+            'driver'    => 'monolog',
+            'handler'   => StreamHandler::class,
+            'with'      => [
+                'stream' => 'php://stderr',
+            ],
+            'tap'       => [UseJsonFormatting::class],
+        ],
+
+        'stdout' => [
             'driver'  => 'monolog',
             'handler' => StreamHandler::class,
             'with'    => [
