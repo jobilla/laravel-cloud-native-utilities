@@ -30,6 +30,14 @@ class CloudNativeServiceProvider extends ServiceProvider
         ], 'cloud-native-config');
 
         $this->publishes([
+            __DIR__.'/../config/logging.php' => config_path('logging.php'),
+        ], 'cloud-native-logging');
+
+        $this->publishes([
+            __DIR__.'/../config/metrics.php' => config_path('metrics.php'),
+        ], 'cloud-native-metrics');
+
+        $this->publishes([
             __DIR__.'/../assets/Dockerfile' => base_path('Dockerfile'),
         ], 'dockerfile');
 
