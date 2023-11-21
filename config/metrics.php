@@ -1,6 +1,15 @@
 <?php
 
 return [
+    // Allowed values: 'redis', 'apc', 'apcng', 'memory' (default)
+    'adapter' => env('METRICS_ADAPTER', 'memory'),
+
+    // What metrics do we want to report on?
+    'handle' => [
+        'database' => env('METRICS_HANDLE_DATABASE', true),
+        'http' => env('METRICS_HANDLE_HTTP', true),
+    ],
+
     // The route configuration controls which path the metrics data is served on
     'route' => [
         'enabled' => env('ENABLE_METRICS', true),
