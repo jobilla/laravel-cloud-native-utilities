@@ -25,15 +25,6 @@ class CloudNativeServiceProvider extends ServiceProvider
     public function boot(Repository $config, Kernel $kernel)
     {
         $this->publishes([
-            __DIR__.'/../config/logging.php' => config_path('logging.php'),
-            __DIR__.'/../config/metrics.php' => config_path('metrics.php'),
-        ], 'cloud-native-config');
-
-        $this->publishes([
-            __DIR__.'/../config/logging.php' => config_path('logging.php'),
-        ], 'cloud-native-logging');
-
-        $this->publishes([
             __DIR__.'/../config/metrics.php' => config_path('metrics.php'),
         ], 'cloud-native-metrics');
 
