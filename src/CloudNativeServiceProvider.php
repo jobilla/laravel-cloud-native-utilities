@@ -46,6 +46,7 @@ class CloudNativeServiceProvider extends ServiceProvider
             $router = $this->app['router'];
             $router->get($config->get('metrics.route.path'), ServeMetrics::class);
             $kernel->prependMiddleware(RecordPrometheusMetrics::class);
+            $kernel->prependMiddleware(LogRequest::class);
         }
     }
 }
