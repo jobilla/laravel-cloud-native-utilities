@@ -4,6 +4,7 @@ namespace Jobilla\CloudNative\Laravel\Http\Middleware;
 
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Context;
 use Prometheus\CollectorRegistry;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,14 +27,16 @@ class RecordPrometheusMetrics
 
     public function handle(Request $request, $next)
     {
+        if (!Context::hasHidden('requestStart')) {
+            Context::setHidden('requestStart', microtime(true));
+        }
+
         return $next($request);
     }
 
     public function terminate(Request $request, Response $response)
     {
-        if (! defined('LARAVEL_START')) {
-            return;
-        }
+        $start = Context::getHidden('requestStart');
         $route = $request->route()->uri();
         if ($route === trim($this->config->get('metrics.route.path'), '/')) {
             return;
